@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Roboto } from "next/font/google";
 import "./globals.css";
 import localFont from "next/font/local";
+import Image from "next/image";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -41,7 +42,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={helvetica.className}>
-      <body className={`${roboto.variable} antialiased bg-gray-00`}>
+      <body className={`${roboto.variable} antialiased`}>
+        <div className="flex bg-card shadow h-[60px] items-center md:pl-8 pl-4">
+          <Image
+            src="https://res.cloudinary.com/dacau0kal/image/upload/v1740512489/teste-tecnico-betalent/o9zys93dgqp9gkcdidfj.webp"
+            width={92}
+            height={34}
+            alt="logo"
+          />
+        </div>
         {children}
       </body>
     </html>

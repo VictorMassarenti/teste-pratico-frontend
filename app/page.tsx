@@ -8,7 +8,7 @@ export default async function Home() {
   if (!employees) throw new Error("Failed to fetch data");
 
   return (
-    <div className="m-10">
+    <div className="md:m-10 m-5">
       <DataTable columns={columns} data={employees} />
     </div>
   );

@@ -22,6 +22,7 @@ export const columns: ColumnDef<Employee>[] = [
         </div>
       </div>
     ),
+    enableGlobalFilter: false,
   },
   {
     accessorKey: "name",
@@ -43,6 +44,7 @@ export const columns: ColumnDef<Employee>[] = [
         })}
       </div>
     ),
+    enableGlobalFilter: false,
   },
   {
     accessorKey: "phone",
