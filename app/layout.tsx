@@ -4,16 +4,6 @@ import "./globals.css";
 import localFont from "next/font/local";
 import Image from "next/image";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 const roboto = Roboto({
   variable: "--font-roboto",
   subsets: ["latin"],

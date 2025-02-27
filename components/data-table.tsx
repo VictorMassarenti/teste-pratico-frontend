@@ -20,6 +20,10 @@ import { Input } from "./ui/input";
 import Image from "next/image";
 import searchImage from "@/public/default.png";
 import { useState } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
+
+import arrowDown from "@/public/charm_chevron-down.png";
+import arrowUp from "@/public/charm_chevron-up.svg";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -30,6 +34,8 @@ export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
+  const isMobile = useIsMobile();
+
   const [globalFilter, setGlobalFilter] = useState<any>([]);
 
   const table = useReactTable({
@@ -63,22 +69,30 @@ export function DataTable<TData, TValue>({
         <Table>
           <TableHeader className="bg-secondary">
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id} className="hover:bg-secondary">
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead
-                      key={header.id}
-                      className="uppercase text-base text-secondary-foreground"
-                    >
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  );
-                })}
+              <TableRow
+                key={headerGroup.id}
+                className={`hover:bg-secondary h-[47px]`}
+              >
+                {headerGroup.headers
+                  .slice(0, isMobile ? 3 : headerGroup.headers.length)
+                  .map((header, index) => {
+                    const isFirstElement = index === 0;
+                    return (
+                      <TableHead
+                        key={header.id}
+                        className={`uppercase text-base text-secondary-foreground ${
+                          isFirstElement && isMobile ? "pl-[14.5px]" : ""
+                        }`}
+                      >
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </TableHead>
+                    );
+                  })}
               </TableRow>
             ))}
           </TableHeader>
@@ -90,14 +104,27 @@ export function DataTable<TData, TValue>({
                   data-state={row.getIsSelected() && "selected"}
                   className="text-base font-normal"
                 >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
+                  {row
+                    .getVisibleCells()
+                    .slice(0, isMobile ? 3 : row.getVisibleCells().length)
+                    .map((cell, index) => {
+                      const isFirstElement = index === 0;
+                      return (
+                        <TableCell
+                          key={cell.id}
+                          className={`${
+                            isFirstElement && isMobile
+                              ? "pl-[14.5px] pr-0"
+                              : "pl-0"
+                          }`}
+                        >
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </TableCell>
+                      );
+                    })}
                 </TableRow>
               ))
             ) : (
