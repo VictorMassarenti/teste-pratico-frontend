@@ -2,6 +2,7 @@
 
 import {
   ColumnDef,
+  ExpandedState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -19,11 +20,8 @@ import {
 import { Input } from "./ui/input";
 import Image from "next/image";
 import searchImage from "@/public/default.png";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
-
-import arrowDown from "@/public/charm_chevron-down.png";
-import arrowUp from "@/public/charm_chevron-up.svg";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -37,14 +35,18 @@ export function DataTable<TData, TValue>({
   const isMobile = useIsMobile();
 
   const [globalFilter, setGlobalFilter] = useState<any>([]);
+  const [expanded, setExpanded] = useState<ExpandedState>({});
 
   const table = useReactTable({
     data,
     columns,
+    enableExpanding: isMobile,
+    onExpandedChange: setExpanded,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     state: {
       globalFilter,
+      expanded,
     },
     onGlobalFilterChange: setGlobalFilter,
   });
@@ -99,33 +101,73 @@ export function DataTable<TData, TValue>({
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                  className="text-base font-normal"
-                >
-                  {row
-                    .getVisibleCells()
-                    .slice(0, isMobile ? 3 : row.getVisibleCells().length)
-                    .map((cell, index) => {
-                      const isFirstElement = index === 0;
-                      return (
-                        <TableCell
-                          key={cell.id}
-                          className={`${
-                            isFirstElement && isMobile
-                              ? "pl-[14.5px] pr-0"
-                              : "pl-0"
-                          }`}
-                        >
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </TableCell>
-                      );
-                    })}
-                </TableRow>
+                <Fragment key={row.id}>
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && "selected"}
+                    className={`text-base font-normal ${
+                      isMobile && "hover:bg-card"
+                    }
+                    ${isMobile && row.getIsExpanded() && "border-b-0"} 
+                    `}
+                    onClick={() => {
+                      isMobile && row.toggleExpanded();
+                    }}
+                  >
+                    {row
+                      .getVisibleCells()
+                      .slice(0, isMobile ? 3 : row.getVisibleCells().length)
+                      .map((cell, index) => {
+                        const isFirstElement = index === 0;
+                        return (
+                          <TableCell
+                            key={cell.id}
+                            className={`${
+                              isFirstElement && isMobile
+                                ? "pl-[14.5px] pr-0"
+                                : "pl-0"
+                            }
+                            ${isMobile && "p-3"}`}
+                          >
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </TableCell>
+                        );
+                      })}
+                  </TableRow>
+                  {isMobile && row.getIsExpanded() && (
+                    <TableRow>
+                      <TableCell colSpan={row.getVisibleCells().length}>
+                        <div className="m-4">
+                          {row
+                            .getVisibleCells()
+                            .slice(3)
+                            .map((cell, index) => (
+                              <div
+                                key={index}
+                                className="flex my-4 justify-between border-b border-secondary-foreground border-gray-300 border-dashed"
+                              >
+                                <div className="text-base font-medium capitalize">
+                                  {
+                                    cell.column.columnDef
+                                      .header as React.ReactNode
+                                  }
+                                </div>
+                                <div className="text-base font-normal capitalize">
+                                  {flexRender(
+                                    cell.column.columnDef.cell,
+                                    cell.getContext()
+                                  )}
+                                </div>
+                              </div>
+                            ))}
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </Fragment>
               ))
             ) : (
               <TableRow>

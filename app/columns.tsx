@@ -6,7 +6,7 @@ import { Employee } from "@/types/employee";
 import { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
 import arrowDown from "@/public/charm_chevron-down.png";
-import arrowUp from "@/public/charm_chevron-up.svg";
+import arrowUp from "@/public/charm_chevron-up.png";
 
 function isMobile() {
   return useIsMobile();
@@ -66,11 +66,16 @@ export const columns: ColumnDef<Employee>[] = [
         </div>
       );
     },
-    cell: () => {
+    cell: ({ row }) => {
       if (!isMobile()) return null;
       return (
         <div className="flex justify-end items-center px-[16px]">
-          <Image src={arrowDown} width={32} height={32} alt="arrow down" />
+          {!row.getIsExpanded() && (
+            <Image src={arrowDown} width={32} height={32} alt="arrow down" />
+          )}
+          {row.getIsExpanded() && (
+            <Image src={arrowUp} width={32} height={32} alt="arrow up" />
+          )}
         </div>
       );
     },
