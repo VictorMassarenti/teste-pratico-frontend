@@ -1,36 +1,31 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Instalação
 
-## Getting Started
-
-First, run the development server:
+Primeiro, instale as dependências:
 
 ```bash
-npm run dev
+pnpm i
 # or
-yarn dev
+npm i
 # or
-pnpm dev
-# or
-bun dev
+yarn
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Executando
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Em seguida, execute o projeto, este comando executa o servidor de desenvolvimento Front-End e o servidor de banco de dados:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+pnpm start:dev
+# or
+npm run start:dev
+# or
+yarn start:dev
+```
 
-## Learn More
+## Abra o projeto
 
-To learn more about Next.js, take a look at the following resources:
+[http://localhost:8000](http://localhost:8000) no seu navegador para ver o projeto.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+* Recomendo a utilização do [pnpm](https://pnpm.io/) para instalação e execução do projeto.
+* Servidor de desenvolvimento roda na porta 8000, o que pode ser alterado no arquivo `package.json`.
+* Servidor de banco de dados roda na porta 3000, o que pode ser alterado no arquivo `package.json`.
