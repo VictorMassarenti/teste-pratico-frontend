@@ -8,7 +8,7 @@ import Image from "next/image";
 import arrowDown from "@/public/charm_chevron-down.png";
 import arrowUp from "@/public/charm_chevron-up.png";
 
-function isMobile() {
+function IsMobile() {
   return useIsMobile();
 }
 
@@ -17,14 +17,14 @@ export const columns: ColumnDef<Employee>[] = [
     accessorKey: "image",
     header: () => (
       <div
-        className={`flex ${isMobile() ? "justify-start" : "justify-center"} `}
+        className={`flex ${IsMobile() ? "justify-start" : "justify-center"} `}
       >
         foto
       </div>
     ),
     cell: ({ row }) => (
       <div
-        className={`flex ${isMobile() ? "justify-start" : "justify-center"} `}
+        className={`flex ${IsMobile() ? "justify-start" : "justify-center"} `}
       >
         <div className="w-[34px] h-[34px] overflow-hidden rounded-full">
           <Image
@@ -43,14 +43,14 @@ export const columns: ColumnDef<Employee>[] = [
     accessorKey: "name",
     header: () => (
       <div
-        className={`flex ${isMobile() ? "justify-start" : "justify-center"} `}
+        className={`flex ${IsMobile() ? "justify-start" : "justify-center"} `}
       >
         nome
       </div>
     ),
     cell: ({ row }) => (
       <div
-        className={`flex ${isMobile() ? "justify-start" : "justify-center"} `}
+        className={`flex ${IsMobile() ? "justify-start" : "justify-center"} `}
       >
         {row.getValue("name")}
       </div>
@@ -59,7 +59,7 @@ export const columns: ColumnDef<Employee>[] = [
   {
     accessorKey: "id",
     header: () => {
-      if (!isMobile()) return null;
+      if (!IsMobile()) return null;
       return (
         <div className="flex justify-end items-center px-[28.5px]">
           <div className="w-2 h-2 rounded-full bg-secondary-foreground" />
@@ -67,7 +67,7 @@ export const columns: ColumnDef<Employee>[] = [
       );
     },
     cell: ({ row }) => {
-      if (!isMobile()) return null;
+      if (!IsMobile()) return null;
       return (
         <div className="flex justify-end items-center px-[16px]">
           {!row.getIsExpanded() && (
